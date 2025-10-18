@@ -1,0 +1,14 @@
+C:\PlaylistMusical\PlaylistMusical\bin\Debug\net8.0\PlaylistMusical.exe
+C:\PlaylistMusical\PlaylistMusical\bin\Debug\net8.0\PlaylistMusical.deps.json
+C:\PlaylistMusical\PlaylistMusical\bin\Debug\net8.0\PlaylistMusical.runtimeconfig.json
+C:\PlaylistMusical\PlaylistMusical\bin\Debug\net8.0\PlaylistMusical.dll
+C:\PlaylistMusical\PlaylistMusical\bin\Debug\net8.0\PlaylistMusical.pdb
+C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\PlaylistMusical.GeneratedMSBuildEditorConfig.editorconfig
+C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\PlaylistMusical.AssemblyInfoInputs.cache
+C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\PlaylistMusical.AssemblyInfo.cs
+C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\PlaylistMusical.csproj.CoreCompileInputs.cache
+C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\PlaylistMusical.dll
+C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\refint\PlaylistMusical.dll
+C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\PlaylistMusical.pdb
+C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\PlaylistMusical.genruntimeconfig.cache
+C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\ref\PlaylistMusical.dll
