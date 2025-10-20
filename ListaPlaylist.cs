@@ -215,7 +215,44 @@ namespace PlaylistMusical
         // ═══════════════════════════════════════════════════════════
         // MÉTODOS ADICIONALES
         // ═══════════════════════════════════════════════════════════
-        
+        /// <summary>
+        /// Elimina la última canción de la playlist
+        /// Equivalente a eliminarFinal() del Proyecto 1
+        /// Complejidad: O(n) - debe encontrar el penúltimo nodo
+        /// </summary>
+        public Cancion EliminarUltimaCancion()
+        {
+            if (inicio == null)
+                return null;
+            
+            // Si solo hay un nodo
+            if (inicio.siguiente == null)
+            {
+                Cancion cancionEliminada = inicio.dato;
+                inicio = final = actual = null;
+                return cancionEliminada;
+            }
+            
+            // Buscar el penúltimo nodo
+            NodoCancion penultimo = inicio;
+            while (penultimo.siguiente != final)
+            {
+                penultimo = penultimo.siguiente;
+            }
+            
+            Cancion eliminada = final.dato;
+            penultimo.siguiente = null;
+            final = penultimo;
+            
+            // Si eliminamos la canción actual, actualizar
+            if (actual == null || actual.siguiente == null)
+            {
+                actual = inicio;
+            }
+            
+            return eliminada;
+        }
+
         public void ModoAleatorio()
         {
             if (inicio == null || inicio.siguiente == null)

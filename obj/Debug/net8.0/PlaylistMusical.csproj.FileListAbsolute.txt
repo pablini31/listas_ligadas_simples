@@ -12,3 +12,4 @@ C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\refint\PlaylistMusical.dll
 C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\PlaylistMusical.pdb
 C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\PlaylistMusical.genruntimeconfig.cache
 C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\ref\PlaylistMusical.dll
+C:\PlaylistMusical\PlaylistMusical\obj\Debug\net8.0\PlaylistMusical.sourcelink.json

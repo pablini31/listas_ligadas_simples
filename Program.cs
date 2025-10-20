@@ -17,7 +17,7 @@ namespace PlaylistMusical
             Console.WriteLine("\nPresiona cualquier tecla para comenzar...");
             Console.ReadKey();
             
-            while (opcion != 16)
+            while (opcion != 15)
             {
                 Console.Clear();
                 MostrarMenu();
@@ -42,25 +42,24 @@ namespace PlaylistMusical
             Console.WriteLine("║      🎵 PLAYLIST MUSICAL - MENÚ 🎵        ║");
             Console.WriteLine("╚════════════════════════════════════════════╝");
             Console.WriteLine();
-            Console.WriteLine("──── OPERACIONES BÁSICAS ────");
+            Console.WriteLine("──── OPERACIONES BÁSICAS (Requeridas) ────");
             Console.WriteLine("1.  📋 Ver playlist completa");
-            Console.WriteLine("2.  ➕ Agregar canción al final");
-            Console.WriteLine("3.  ⏭️  Agregar canción como siguiente");
-            Console.WriteLine("4.  ▶️  Reproducir siguiente canción");
-            Console.WriteLine("5.  🔍 Buscar canción por título");
-            Console.WriteLine("6.  🗑️  Eliminar canción");
+            Console.WriteLine("2.  ➕ Agregar canción al inicio");
+            Console.WriteLine("3.  ➕ Agregar canción al final");
+            Console.WriteLine("4.  ❌ Eliminar del inicio");
+            Console.WriteLine("5.  ❌ Eliminar del final");
+            Console.WriteLine("6.  🔍 Buscar canción por título");
             Console.WriteLine("7.  📊 Información de la playlist");
-            Console.WriteLine("8.  🧹 Limpiar playlist");
             Console.WriteLine();
-            Console.WriteLine("──── OPERACIONES AVANZADAS ────");
+            Console.WriteLine("──── OPERACIONES ADICIONALES ────");
+            Console.WriteLine("8.  🗑️  Eliminar canción específica");
             Console.WriteLine("9.  🔀 Modo aleatorio (Shuffle)");
             Console.WriteLine("10. 📝 Ordenar por duración");
             Console.WriteLine("11. 🎲 Reproducir canción aleatoria");
             Console.WriteLine("12. 💾 Guardar playlist");
             Console.WriteLine("13. 📂 Cargar playlist");
             Console.WriteLine("14. 📊 Estadísticas avanzadas");
-            Console.WriteLine("15. ℹ️  Acerca de (Comparación Proyecto 1 vs 2)");
-            Console.WriteLine("16. 🚪 Salir");
+            Console.WriteLine("15. 🚪 Salir");
             Console.WriteLine();
             Console.Write("Selecciona una opción: ");
         }
@@ -73,25 +72,25 @@ namespace PlaylistMusical
                     MostrarPlaylistCompleta(playlist);
                     break;
                 case 2:
-                    AgregarCancionAlFinal(playlist);
+                    AgregarCancionAlInicio(playlist);
                     break;
                 case 3:
-                    AgregarComoSiguiente(playlist);
+                    AgregarCancionAlFinal(playlist);
                     break;
                 case 4:
-                    ReproducirSiguiente(playlist);
+                    EliminarDelInicio(playlist);
                     break;
                 case 5:
-                    BuscarCancion(playlist);
+                    EliminarDelFinal(playlist);
                     break;
                 case 6:
-                    EliminarCancion(playlist);
+                    BuscarCancion(playlist);
                     break;
                 case 7:
                     MostrarInformacion(playlist);
                     break;
                 case 8:
-                    LimpiarPlaylist(playlist);
+                    EliminarCancionEspecifica(playlist);
                     break;
                 case 9:
                     ModoAleatorio(playlist);
@@ -112,9 +111,6 @@ namespace PlaylistMusical
                     MostrarEstadisticas(playlist);
                     break;
                 case 15:
-                    MostrarAcercaDe();
-                    break;
-                case 16:
                     Console.WriteLine("═══════════════════════════════════════════");
                     Console.WriteLine("👋 ¡Gracias por usar Playlist Musical!");
                     Console.WriteLine("═══════════════════════════════════════════");
@@ -127,7 +123,7 @@ namespace PlaylistMusical
         }
         
         // ════════════════════════════════════════════════════════════
-        // OPERACIONES BÁSICAS (Ya existentes)
+        // OPERACIONES BÁSICAS CORREGIDAS
         // ════════════════════════════════════════════════════════════
         
         static void MostrarPlaylistCompleta(ListaPlaylist playlist)
@@ -137,6 +133,35 @@ namespace PlaylistMusical
             Console.WriteLine("═══════════════════════════════════════════");
             playlist.MostrarPlaylist();
             Console.WriteLine("\nPresiona cualquier tecla para continuar...");
+            Console.ReadKey();
+        }
+        
+        static void AgregarCancionAlInicio(ListaPlaylist playlist)
+        {
+            Console.WriteLine("═══════════════════════════════════════════");
+            Console.WriteLine("      ➕ AGREGAR CANCIÓN AL INICIO         ");
+            Console.WriteLine("═══════════════════════════════════════════");
+            
+            Console.Write("Título de la canción: ");
+            string titulo = Console.ReadLine();
+            
+            Console.Write("Artista: ");
+            string artista = Console.ReadLine();
+            
+            Console.Write("Duración (en segundos): ");
+            int duracion;
+            
+            if (int.TryParse(Console.ReadLine(), out duracion) && duracion > 0)
+            {
+                Cancion nueva = new Cancion(titulo, artista, duracion);
+                playlist.AgregarComoSiguiente(nueva);
+                Console.WriteLine($"\n✅ '{titulo}' agregada al inicio de la playlist");
+            }
+            else
+            {
+                Console.WriteLine("\n❌ Duración inválida");
+            }
+            
             Console.ReadKey();
         }
         
@@ -169,51 +194,45 @@ namespace PlaylistMusical
             Console.ReadKey();
         }
         
-        static void AgregarComoSiguiente(ListaPlaylist playlist)
+        // ✅ CORREGIDO: Eliminar del inicio SIN preguntar
+        static void EliminarDelInicio(ListaPlaylist playlist)
         {
             Console.WriteLine("═══════════════════════════════════════════");
-            Console.WriteLine("     ⏭️  AGREGAR COMO SIGUIENTE            ");
+            Console.WriteLine("         ❌ ELIMINAR DEL INICIO            ");
             Console.WriteLine("═══════════════════════════════════════════");
             
-            Console.Write("Título de la canción: ");
-            string titulo = Console.ReadLine();
+            Cancion eliminada = playlist.ReproducirSiguiente();
             
-            Console.Write("Artista: ");
-            string artista = Console.ReadLine();
-            
-            Console.Write("Duración (en segundos): ");
-            int duracion;
-            
-            if (int.TryParse(Console.ReadLine(), out duracion) && duracion > 0)
+            if (eliminada != null)
             {
-                Cancion nueva = new Cancion(titulo, artista, duracion);
-                playlist.AgregarComoSiguiente(nueva);
-                Console.WriteLine($"\n✅ '{titulo}' será la siguiente en reproducirse");
+                Console.WriteLine($"\n✅ Canción eliminada del inicio:");
+                Console.WriteLine($"   {eliminada.MostrarInfo()}");
             }
             else
             {
-                Console.WriteLine("\n❌ Duración inválida");
+                Console.WriteLine("\n❌ La playlist está vacía");
             }
             
             Console.ReadKey();
         }
         
-        static void ReproducirSiguiente(ListaPlaylist playlist)
+        // ✅ NUEVO: Eliminar del final SIN preguntar
+        static void EliminarDelFinal(ListaPlaylist playlist)
         {
             Console.WriteLine("═══════════════════════════════════════════");
-            Console.WriteLine("       ▶️  REPRODUCIR SIGUIENTE             ");
+            Console.WriteLine("         ❌ ELIMINAR DEL FINAL             ");
             Console.WriteLine("═══════════════════════════════════════════");
             
-            Cancion reproducida = playlist.ReproducirSiguiente();
+            Cancion eliminada = playlist.EliminarUltimaCancion();
             
-            if (reproducida != null)
+            if (eliminada != null)
             {
-                Console.WriteLine($"\n🎵 Reproduciendo: {reproducida.MostrarInfo()}");
-                Console.WriteLine($"⏱️  Duración: {reproducida.DuracionFormateada()}");
+                Console.WriteLine($"\n✅ Canción eliminada del final:");
+                Console.WriteLine($"   {eliminada.MostrarInfo()}");
             }
             else
             {
-                Console.WriteLine("\n❌ No hay canciones en la playlist");
+                Console.WriteLine("\n❌ La playlist está vacía");
             }
             
             Console.ReadKey();
@@ -243,10 +262,43 @@ namespace PlaylistMusical
             Console.ReadKey();
         }
         
-        static void EliminarCancion(ListaPlaylist playlist)
+        static void MostrarInformacion(ListaPlaylist playlist)
         {
             Console.WriteLine("═══════════════════════════════════════════");
-            Console.WriteLine("         🗑️  ELIMINAR CANCIÓN               ");
+            Console.WriteLine("       📊 INFORMACIÓN DE LA PLAYLIST       ");
+            Console.WriteLine("═══════════════════════════════════════════");
+            
+            int totalCanciones = playlist.ContarCanciones();
+            int duracionTotal = playlist.DuracionTotal();
+            int minutos = duracionTotal / 60;
+            int segundos = duracionTotal % 60;
+            
+            Console.WriteLine($"\n📀 Total de canciones: {totalCanciones}");
+            Console.WriteLine($"⏱️  Duración total: {minutos}:{segundos:D2} ({duracionTotal} segundos)");
+            
+            Cancion actual = playlist.ObtenerCancionActual();
+            if (actual != null)
+            {
+                Console.WriteLine($"\n▶️  Primera canción:");
+                Console.WriteLine($"   {actual.MostrarInfo()}");
+            }
+            else
+            {
+                Console.WriteLine("\n⏸️  Playlist vacía");
+            }
+            
+            Console.WriteLine("\nPresiona cualquier tecla para continuar...");
+            Console.ReadKey();
+        }
+        
+        // ════════════════════════════════════════════════════════════
+        // OPERACIONES ADICIONALES
+        // ════════════════════════════════════════════════════════════
+        
+        static void EliminarCancionEspecifica(ListaPlaylist playlist)
+        {
+            Console.WriteLine("═══════════════════════════════════════════");
+            Console.WriteLine("     🗑️  ELIMINAR CANCIÓN ESPECÍFICA       ");
             Console.WriteLine("═══════════════════════════════════════════");
             
             playlist.MostrarPlaylist();
@@ -265,61 +317,6 @@ namespace PlaylistMusical
             
             Console.ReadKey();
         }
-        
-        static void MostrarInformacion(ListaPlaylist playlist)
-        {
-            Console.WriteLine("═══════════════════════════════════════════");
-            Console.WriteLine("       📊 INFORMACIÓN DE LA PLAYLIST       ");
-            Console.WriteLine("═══════════════════════════════════════════");
-            
-            int totalCanciones = playlist.ContarCanciones();
-            int duracionTotal = playlist.DuracionTotal();
-            int minutos = duracionTotal / 60;
-            int segundos = duracionTotal % 60;
-            
-            Console.WriteLine($"\n📀 Total de canciones: {totalCanciones}");
-            Console.WriteLine($"⏱️  Duración total: {minutos}:{segundos:D2} ({duracionTotal} segundos)");
-            
-            Cancion actual = playlist.ObtenerCancionActual();
-            if (actual != null)
-            {
-                Console.WriteLine($"\n▶️  Reproduciendo ahora:");
-                Console.WriteLine($"   {actual.MostrarInfo()}");
-            }
-            else
-            {
-                Console.WriteLine("\n⏸️  No hay canción reproduciéndose");
-            }
-            
-            Console.WriteLine("\nPresiona cualquier tecla para continuar...");
-            Console.ReadKey();
-        }
-        
-        static void LimpiarPlaylist(ListaPlaylist playlist)
-        {
-            Console.WriteLine("═══════════════════════════════════════════");
-            Console.WriteLine("         🧹 LIMPIAR PLAYLIST               ");
-            Console.WriteLine("═══════════════════════════════════════════");
-            
-            Console.Write("\n⚠️  ¿Estás seguro? (S/N): ");
-            string confirmacion = Console.ReadLine().ToUpper();
-            
-            if (confirmacion == "S")
-            {
-                playlist.LimpiarPlaylist();
-                Console.WriteLine("\n✅ Playlist limpiada correctamente");
-            }
-            else
-            {
-                Console.WriteLine("\n❌ Operación cancelada");
-            }
-            
-            Console.ReadKey();
-        }
-        
-        // ════════════════════════════════════════════════════════════
-        // OPERACIONES AVANZADAS (Nuevas)
-        // ════════════════════════════════════════════════════════════
         
         static void ModoAleatorio(ListaPlaylist playlist)
         {
@@ -462,49 +459,6 @@ namespace PlaylistMusical
             }
             
             Console.WriteLine("\nPresiona cualquier tecla para continuar...");
-            Console.ReadKey();
-        }
-        
-        static void MostrarAcercaDe()
-        {
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║              ℹ️  ACERCA DE ESTE PROYECTO                   ║");
-            Console.WriteLine("╚════════════════════════════════════════════════════════════╝");
-            Console.WriteLine();
-            Console.WriteLine("📚 COMPARACIÓN: PROYECTO 1 vs PROYECTO 2");
-            Console.WriteLine("══════════════════════════════════════════════════════════════");
-            Console.WriteLine();
-            Console.WriteLine("🔹 PROYECTO 1: Lista Ligada Simple Genérica");
-            Console.WriteLine("   - Almacena: Números enteros (int)");
-            Console.WriteLine("   - Propósito: Demostrar operaciones básicas");
-            Console.WriteLine("   - Operaciones: 10 métodos fundamentales");
-            Console.WriteLine();
-            Console.WriteLine("🔹 PROYECTO 2: Playlist Musical");
-            Console.WriteLine("   - Almacena: Objetos Cancion (título, artista, duración)");
-            Console.WriteLine("   - Propósito: Aplicación a caso real");
-            Console.WriteLine("   - Operaciones: 15 métodos (básicos + avanzados)");
-            Console.WriteLine();
-            Console.WriteLine("📊 CONCEPTOS DEMOSTRADOS:");
-            Console.WriteLine("══════════════════════════════════════════════════════════════");
-            Console.WriteLine(" ✅ Adaptación de lista genérica a dominio específico");
-            Console.WriteLine(" ✅ Operaciones con significado del mundo real");
-            Console.WriteLine(" ✅ Estado adicional (canción actual)");
-            Console.WriteLine(" ✅ Búsqueda por propiedades de objetos");
-            Console.WriteLine(" ✅ Ordenamiento con algoritmo Burbuja");
-            Console.WriteLine(" ✅ Persistencia de datos (guardar/cargar)");
-            Console.WriteLine(" ✅ Estadísticas y análisis de datos");
-            Console.WriteLine();
-            Console.WriteLine("⚙️  COMPLEJIDADES ALGORÍTMICAS:");
-            Console.WriteLine("══════════════════════════════════════════════════════════════");
-            Console.WriteLine(" • AgregarAlFinal():      O(1)  - Acceso directo con 'final'");
-            Console.WriteLine(" • ReproducirSiguiente(): O(1)  - Eliminar del inicio");
-            Console.WriteLine(" • BuscarPorTitulo():     O(n)  - Recorrido lineal");
-            Console.WriteLine(" • OrdenarPorDuracion():  O(n²) - Algoritmo Burbuja");
-            Console.WriteLine(" • ModoAleatorio():       O(n)  - Shuffle con Fisher-Yates");
-            Console.WriteLine();
-            Console.WriteLine("══════════════════════════════════════════════════════════════");
-            Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
             Console.ReadKey();
         }
     }
